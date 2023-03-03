@@ -4,6 +4,34 @@
 <section>
   <h1>{{board.name}} Board</h1>
   <p>Description: {{board.description}}</p>
+
+  {% if board.tags.count %}
+    <p>Tags:</p>
+    {% for tag in board.tags.all %}
+      <p>{{tag.name}}</p>
+      <form action="{% url 'unassoc_tag' board.id tag.id%}" method="post">
+        {% csrf_token%}
+        <button type="submit">Remove</button>
+      </form>
+    {% endfor %}
+  {% else %}
+      <p>No tags</p>
+  {% endif %}
+
+  {% if tags.count %}
+    <p>Available Tags:</p>
+    {% for tag in tags.all %}
+      <p>{{tag.name}}</p>
+      <form action="{% url 'assoc_tag' board.id tag.id%}" method="post">
+        {% csrf_token%}
+        <button type="submit">Add</button>
+      </form>
+    {% endfor %}
+  {% else %}
+    <p>{{board.name}} has all available tags</p>
+   
+  {% endif %}
+
   <div>
     <a href="{% url 'board_update' board.id %}">Edit</a>
     <a href="{% url 'board_delete' board.id %}">Delete</a>
