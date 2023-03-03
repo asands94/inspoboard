@@ -2,7 +2,9 @@ from django.shortcuts import render, redirect
 import uuid
 import boto3
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from .models import Board, Photo
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from .models import Board, Tag, Photo
 
 S3_BASE_URL = 'https://s3.amazonaws.com/'
 BUCKET = 'inspoboarddjangoapp'
@@ -17,20 +19,19 @@ def boards_index(request):
 
 def boards_details(request, board_id):
     board = Board.objects.get(id=board_id)
-    return render(request, 'boards/details.html', {'board': board})
 
-class BoardCreate(CreateView):
-    model = Board
-    fields = '__all__'
+    tags = Tag.objects.all()
+    tags_board_doesnt_have = tags.exclude(id__in = board.tags.all().values_list('id'))
 
-class BoardUpdate(UpdateView):
-    model = Board
-    fields = '__all__'
-    
-class BoardDelete(DeleteView):
-    model = Board
-    success_url = '/boards'
+    return render(request, 'boards/details.html', {'board': board, 'tags': tags_board_doesnt_have})
 
+def assoc_tag(request, board_id, tag_id):
+  Board.objects.get(id=board_id).tags.add(tag_id)
+  return redirect('details', board_id=board_id)
+
+def unassoc_tag(request, board_id, tag_id):
+  Board.objects.get(id=board_id).tags.remove(tag_id)
+  return redirect('details', board_id=board_id)
 
 def add_photo(request, board_id):
     # photo-file will be the "name" attribute on the <input type="file">
@@ -50,3 +51,38 @@ def add_photo(request, board_id):
         except:
             print('An error occurred uploading file to S3')
     return redirect('details', board_id=board_id)
+
+class BoardCreate(CreateView):
+    model = Board
+    fields = ['name', 'description']
+
+class BoardUpdate(UpdateView):
+    model = Board
+    fields = ['name', 'description']
+    
+class BoardDelete(DeleteView):
+    model = Board
+    success_url = '/boards/'
+
+class TagList(ListView):
+    model = Tag
+    template_name = 'tags/index.html'
+
+    def get_all(self):
+      return Tag.objects.all()
+
+class TagDetail(DetailView):
+  model = Tag
+  template_name = 'tags/details.html'
+
+class TagCreate(CreateView):
+  model = Tag
+  fields = '__all__'
+
+class TagUpdate(UpdateView):
+    model = Tag
+    fields = '__all__'
+
+class TagDelete(DeleteView):
+    model = Tag
+    success_url = '/tags/'
