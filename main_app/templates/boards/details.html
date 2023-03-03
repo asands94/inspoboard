@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+  <h1>{{board.name}} Board</h1>
+  <p>Description: {{board.description}}</p>
+  {% for photo in board.photo_set.all %}
+    <img src="{{photo.url}}" />
+  {% empty %}
+    <div>No Photos uploaded</div>
+  {% endfor %}
+  <form 
+    action="{% url 'add_photo' board.id %}"
+    enctype="multipart/form-data"
+    method="POST"
+  >
+    {% csrf_token %}
+    <input type="file" name="photo-file" />
+    <br /><br />
+    <input type="submit" value="Upload Photo" />
+  </form>
+</section>
+{% endblock %}

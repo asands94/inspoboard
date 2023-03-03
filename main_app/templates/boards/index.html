@@ -3,10 +3,12 @@
 {% block content %}
 <section>
   <h1>My Boards</h1>
-  {% if boards %}
+  {% if boards  %}
     {% for board in boards %}
+    <a href="{% url 'details' board.id%}">
       <p>Name: {{board.name}}</p>
       <p>Description: {{board.description}}</p>
+    </a>
     {% endfor %}
   {% else %}
     <p>No boards yet...</p>

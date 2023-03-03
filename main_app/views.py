@@ -14,6 +14,10 @@ def boards_index(request):
     boards = Board.objects.all()
     return render(request, 'boards/index.html', {'boards': boards})
 
+def boards_details(request, board_id):
+    board = Board.objects.get(id=board_id)
+    return render(request, 'boards/details.html', {'board': board})
+
 
 def add_photo(request, board_id):
     # photo-file will be the "name" attribute on the <input type="file">
@@ -32,4 +36,4 @@ def add_photo(request, board_id):
             photo.save()
         except:
             print('An error occurred uploading file to S3')
-    return redirect('detail', board_id=board_id)
+    return redirect('details', board_id=board_id)
