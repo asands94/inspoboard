@@ -88,18 +88,18 @@ WSGI_APPLICATION = 'inspoboard.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'inspirationcollector',
-    }
-}
-
 # DATABASES = {
-#     'default': dj_database_url.config(     
-#     default='postgresql://postgres:postgres@localhost:5432/inspirationcollector',        
-#     conn_max_age=600    )
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'inspirationcollector',
 #     }
+# }
+
+DATABASES = {
+    'default': dj_database_url.config(     
+    default='postgresql://postgres:postgres@localhost:5432/inspirationcollector',        
+    conn_max_age=600    )
+    }
 
 
 # Password validation
