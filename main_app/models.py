@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 class Board(models.Model):
@@ -7,6 +8,9 @@ class Board(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse('details', kwargs={'board_id': self.id})
 
 
 class Photo(models.Model):
