@@ -4,6 +4,10 @@
 <section>
   <h1>{{board.name}} Board</h1>
   <p>Description: {{board.description}}</p>
+  <div>
+    <a href="{% url 'board_update' board.id %}">Edit</a>
+    <a href="{% url 'board_delete' board.id %}">Delete</a>
+  </div>
   {% for photo in board.photo_set.all %}
     <img src="{{photo.url}}" />
   {% empty %}

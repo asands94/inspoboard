@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import uuid
 import boto3
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Board, Photo
 
 S3_BASE_URL = 'https://s3.amazonaws.com/'
@@ -22,6 +22,14 @@ def boards_details(request, board_id):
 class BoardCreate(CreateView):
     model = Board
     fields = '__all__'
+
+class BoardUpdate(UpdateView):
+    model = Board
+    fields = '__all__'
+    
+class BoardDelete(DeleteView):
+    model = Board
+    success_url = '/boards'
 
 
 def add_photo(request, board_id):
