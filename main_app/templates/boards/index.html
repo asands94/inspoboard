@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+  <h1>My Boards</h1>
+  {% if boards %}
+    {% for board in boards %}
+      <p>Name: {{board.name}}</p>
+      <p>Description: {{board.description}}</p>
+    {% endfor %}
+  {% else %}
+    <p>No boards yet...</p>
+  {% endif %}
+</section>
+{% endblock %}

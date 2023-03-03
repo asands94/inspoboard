@@ -10,7 +10,16 @@
   <title>Inspo Board</title>
 </head>
 <body>
-  <header></header>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="/">Inspo Board</a></li>
+      </ul>
+      <ul>
+        <li><a href="{% url 'index'%}">My Boards</a></li>
+      </ul>
+    </nav>
+  </header>
   <main>{% block content %} {% endblock %}</main>
   <footer></footer>
 </body>
