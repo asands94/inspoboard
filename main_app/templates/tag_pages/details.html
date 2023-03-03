@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section>
+  <h1>{{tag.name}}</h1>
+  <div>
+    <a href="{% url 'tags_update' tag.id %}">Edit</a>
+    <a href="{% url 'tags_delete' tag.id %}">Delete</a>
+  </div>
+</section>
+{% endblock %}

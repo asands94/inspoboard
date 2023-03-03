@@ -66,14 +66,14 @@ class BoardDelete(DeleteView):
 
 class TagList(ListView):
     model = Tag
-    template_name = 'tags/index.html'
+    template_name = 'tag_pages/index.html'
 
     def get_all(self):
       return Tag.objects.all()
 
 class TagDetail(DetailView):
   model = Tag
-  template_name = 'tags/details.html'
+  template_name = 'tag_pages/details.html'
 
 class TagCreate(CreateView):
   model = Tag
